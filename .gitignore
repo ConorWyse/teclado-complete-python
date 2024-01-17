@@ -1,0 +1,7 @@
+# macOS specific
+.DS_Store
+
+# Python environments
+__pycache__/
+.venv
+
