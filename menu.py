@@ -31,21 +31,18 @@ def print_next_book():
     print(next(books_generator))
 
 
-# print('=== Highest rated ===')
-# print_best_books()
-# print('=== Cheapest books ===')
-# print_cheapest_books()
+user_choices = {
+    'b': print_best_books,
+    'c': print_cheapest_books,
+    'n': print_next_book
+}
 
 
 def menu():
     user_input = input(USER_CHOICE)
     while user_input != 'q':
-        if user_input == 'b':
-            print_best_books()
-        elif user_input == 'c':
-            print_cheapest_books()
-        elif user_input == 'n':
-            pass
+        if user_input in user_choices:
+            user_choices[user_input]()
         user_input = input(USER_CHOICE)
 
 
