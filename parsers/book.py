@@ -21,7 +21,8 @@ class BookParser:
         self.parent = parent
     
     def __repr__(self) -> str:
-        return f'<Book {self.title}, {self.rating} stars, at £{self.price}>'
+        available = 'available' if self.available else 'out of stock'
+        return f'<Book {self.title}, {self.rating} stars, at £{self.price}, {available}>'
 
     @property
     def title(self) -> str:
@@ -50,3 +51,12 @@ class BookParser:
         rating_classes = [className for className in classes if className != 'star-rating']
         rating_value = BookParser.RATINGS.get(rating_classes[0]) # None if not found
         return rating_value
+
+    # Somewhat pointless as all books are "in stock"; and because the tutor meant
+    # "next book" when he said "next AVAILABLE book"
+    @property
+    def available(self) -> bool:
+        locator = BookLocators.AVAILABLE
+        item_link = self.parent.select_one(locator)
+        classes = item_link.attrs['class']
+        return 'instock' in classes

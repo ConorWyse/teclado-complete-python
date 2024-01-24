@@ -1,6 +1,16 @@
 from app import books
 
 
+USER_CHOICE = '''Enter one of the following
+
+- 'b' to list highest rated books
+- 'c' to list cheapest books
+- 'n' to display the next available book in the catalogue
+- 'q' to quit
+
+Enter your choice: '''
+
+
 def print_best_books():
     best_books = sorted(books, key=lambda x: x.rating, reverse=True)[:10]
     for book in best_books:
@@ -13,7 +23,30 @@ def print_cheapest_books():
         print(book)
 
 
-print('=== Highest rated ===')
-print_best_books()
-print('=== Cheapest books ===')
-print_cheapest_books()
+books_generator = (x for x in books)
+
+
+def print_next_book():
+    # available_books = sorted(books, key=lambda x: x.available)
+    print(next(books_generator))
+
+
+# print('=== Highest rated ===')
+# print_best_books()
+# print('=== Cheapest books ===')
+# print_cheapest_books()
+
+
+def menu():
+    user_input = input(USER_CHOICE)
+    while user_input != 'q':
+        if user_input == 'b':
+            print_best_books()
+        elif user_input == 'c':
+            print_cheapest_books()
+        elif user_input == 'n':
+            pass
+        user_input = input(USER_CHOICE)
+
+
+menu()
