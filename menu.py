@@ -1,4 +1,4 @@
-from app import books
+from app import books, page_count
 
 
 USER_CHOICE = '''Enter one of the following
@@ -6,6 +6,7 @@ USER_CHOICE = '''Enter one of the following
 - 'b' to list highest rated books
 - 'c' to list cheapest books
 - 'n' to display the next available book in the catalogue
+- 'p' to display the number of pages
 - 'q' to quit
 
 Enter your choice: '''
@@ -31,10 +32,15 @@ def print_next_book():
     print(next(books_generator))
 
 
+def print_page_count():
+    print(page_count)
+
+
 user_choices = {
     'b': print_best_books,
     'c': print_cheapest_books,
-    'n': print_next_book
+    'n': print_next_book,
+    'p': print_page_count
 }
 
 

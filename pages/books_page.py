@@ -1,3 +1,4 @@
+import re
 from bs4 import BeautifulSoup
 
 from locators.books_page_locator import BooksPageLocators
@@ -13,3 +14,9 @@ class BooksPage:
         locator = BooksPageLocators.BOOK
         book_tags = self.soup.select(locator)
         return [BookParser(e) for e in book_tags]
+
+    @property
+    def page_count(self) -> int:
+        content = self.soup.select_one(BooksPageLocators.PAGER).string
+        match = re.search(' of (\d+)', content)
+        return int(match.group(1))

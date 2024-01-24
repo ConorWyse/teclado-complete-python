@@ -22,7 +22,8 @@ class BookParser:
     
     def __repr__(self) -> str:
         available = 'available' if self.available else 'out of stock'
-        return f'<Book {self.title}, {self.rating} stars, at £{self.price}, {available}>'
+        price = "{:,.2f}".format(self.price)
+        return f' • {self.rating} stars, £{price} : {self.title}'
 
     @property
     def title(self) -> str:
