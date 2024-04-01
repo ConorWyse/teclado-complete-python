@@ -21,6 +21,6 @@ source .venv/bin/activate
 
 ### Install some libraries
 ```
-pip3 install request
+pip3 install requests
 pip3 install beautifulsoup4
 ```
