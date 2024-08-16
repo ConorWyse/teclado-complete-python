@@ -20,7 +20,13 @@ source .venv/bin/activate
 ```
 
 ### Install some libraries
+#### Pre-chapter 13
 ```
 pip3 install requests
 pip3 install beautifulsoup4
+```
+
+#### Chapter 13
+```
+pip3 install aiohttp
 ```
