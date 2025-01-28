@@ -19,9 +19,9 @@ def home():
 def get_post(post_id):
     post = posts.get(post_id)
     if not post:
-        return render_template('404.html', message=f'A post with id {post_id} was not found.')
+        return render_template('404.jinja2', message=f'A post with id {post_id} was not found.')
     #return f"Post {post['title']}, content:\n\n{post['content']}"
-    return render_template('post.html', post=post)
+    return render_template('post.jinja2', post=post)
 
 
 if __name__ == '__main__':
