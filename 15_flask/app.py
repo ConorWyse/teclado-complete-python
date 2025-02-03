@@ -5,7 +5,7 @@ app = Flask(__name__)
 posts = {
     0: {
         'id': 0,
-        'title': 'Hellow, world',
+        'title': 'Hello, world',
         'content': 'This is my first blog post!'
     }
 }
@@ -13,7 +13,7 @@ posts = {
 
 @app.route('/')
 def home():
-    return 'Hello, world!'
+    return render_template('home.jinja2', posts=posts)
 
 
 @app.route('/post/<int:post_id>')
