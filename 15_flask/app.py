@@ -25,19 +25,16 @@ def get_post(post_id):
     return render_template('post.jinja2', post=post)
 
 
-@app.route('/post/form')
-def form():
-    return render_template('create.jinja2')
-
-
-@app.route('/post/create')
+@app.route('/post/create', methods=['GET', 'POST'])
 def create():
-    title = request.args.get('title')
-    content = request.args.get('content')
-    post_id = len(posts)
-    posts[post_id] = {'id': post_id, 'title': title, 'content': content}
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+        post_id = len(posts)
+        posts[post_id] = {'id': post_id, 'title': title, 'content': content}
 
-    return redirect(url_for('get_post', post_id=post_id))
+        return redirect(url_for('get_post', post_id=post_id))
+    return render_template('create.jinja2')
 
 
 if __name__ == '__main__':
