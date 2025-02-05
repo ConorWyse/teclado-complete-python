@@ -1,4 +1,4 @@
-import functools
+from functools import wraps
 
 # User identity dictionary
 user = {
@@ -11,12 +11,12 @@ user = {
 # Define a check_permission() decorator:
 def check_permission(required_role):
     def check_permission_decorator(func):
-        @functools.wraps(func)
+        @wraps(func)
         def secure_func(*args, **kwargs):
             if user.get('role') == required_role:
                 return func(*args, **kwargs)
             else:
-                return PermissionError
+                raise PermissionError("You do not have the proper access level.")
         return secure_func
     return check_permission_decorator
 
