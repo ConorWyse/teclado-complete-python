@@ -4,7 +4,7 @@ import functools
 user = {
     'id': 1,
     'name': 'jose',
-    'role': 'admin'
+    'role': 'badmin'
 }
 
 
@@ -12,9 +12,9 @@ user = {
 def check_permission(required_role):
     def check_permission_decorator(func):
         @functools.wraps(func)
-        def secure_func():
+        def secure_func(*args, **kwargs):
             if user.get('role') == required_role:
-                return func()
+                return func(*args, **kwargs)
             else:
                 return PermissionError
         return secure_func
@@ -29,7 +29,19 @@ def delete_database():
     print('Database deleted!')
 
 
-delete_database()
+@check_permission('admin')
+def something_silly(msg):
+    """
+    This is 'something_silly'
+    """
+    print(f"{msg} You must be an admin to see this message.")
 
-# print(delete_database.__name__)
-# print(delete_database.__doc__)
+
+delete_database()
+something_silly('woot!')
+
+
+print(delete_database.__name__)
+print(delete_database.__doc__)
+print(something_silly.__name__)
+print(something_silly.__doc__)
