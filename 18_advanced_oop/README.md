@@ -1,0 +1,1 @@
+An example of how to use multiple inheritance and abstract base classes.
