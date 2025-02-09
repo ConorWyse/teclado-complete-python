@@ -57,3 +57,60 @@ class BinaryTree:
         self._preorder_recursive(current_node.left)
         self._preorder_recursive(current_node.right)
 
+    def find_parent(self, value: int) -> Node:
+        if self.head and self.head.value == value:
+            return self.head
+        current_node = self.head
+        while current_node:
+            if (current_node.left and current_node.left.value == value) or\
+               (current_node.right and current_node.right.value == value):
+                return current_node
+            if value < current_node.value:
+                current_node = current_node.left
+            else:
+                current_node = current_node.right
+        raise LookupError(f'A node with value {value} was not found.')
+
+    def find_rightmost(self, node: None) -> Node:
+        current_node = node
+        while current_node.right:
+            current_node =  current_node.right
+        return current_node
+
+    def delete(self, value: int):
+        to_delete = self.find(value)
+        to_delete_parent = self.find_parent(value)
+
+        if to_delete.left and to_delete.right:
+            # Two children; trickiest situation
+            rightmost = self.find_rightmost(to_delete.left)
+            rightmost_parent = self.find_parent(rightmost.value)
+
+            if rightmost_parent != to_delete:
+                rightmost_parent.right = rightmost.left
+                rightmost.left = to_delete.left
+            rightmost.right = to_delete.right
+
+            if to_delete == to_delete_parent.left:
+                to_delete_parent.left = rightmost
+            elif to_delete == to_delete_parent.right:
+                to_delete_parent.right = rightmost
+            else:
+                self.head = rightmost
+        elif to_delete.left or to_delete.right:
+            # One child
+            if to_delete == to_delete_parent.left:
+                to_delete_parent.left = to_delete.right or to_delete.left
+            elif to_delete == to_delete_parent.right:
+                to_delete_parent.right = to_delete.right or to_delete.left
+            else:
+                self.head = to_delete.right or to_delete.left
+        else:
+            # No children: easiest situation
+            if to_delete == to_delete_parent.left:
+                to_delete_parent.left = None
+            elif to_delete == to_delete_parent.right:
+                to_delete_parent.right = None
+            else:
+                # We are trying to delete the root node (when it is the last node remaining)
+                self.head = None
